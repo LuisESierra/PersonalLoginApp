@@ -2,15 +2,15 @@ import user from "../models/user.model.js"
 import room from "../models/room.model.js";
 
 export const register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { name, identification, email } = req.body;
     try {
         const roomCodeEntry = await room.findOne();
         const roomCode = roomCodeEntry ? roomCodeEntry.code : "INIT"; 
         
         const newUser = new user({
-            username,
+            name,
+            identification,
             email,
-            password,
             roomCode
         });
         
