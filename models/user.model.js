@@ -15,11 +15,27 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },    
+    tipoUsuario: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    rol: {
+        type: String,
+        required: true,
+        trim: true
     },
     roomCode: {
         type: String,
         required: true,
         trim: true
+    },
+    finalizadaTarea: {
+        type: Boolean,
+        required: true,
+        trim: true 
     }
+
 })
 export default mongoose.model('User', userSchema)

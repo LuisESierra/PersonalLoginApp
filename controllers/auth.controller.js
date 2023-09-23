@@ -2,7 +2,7 @@ import user from "../models/user.model.js"
 import room from "../models/room.model.js";
 
 export const register = async (req, res) => {
-    const { name, identification, email } = req.body;
+    const { name, identification, email, tipoUsuario, rol, finalizadaTarea } = req.body;
     try {
         const roomCodeEntry = await room.findOne();
         const roomCode = roomCodeEntry ? roomCodeEntry.code : "INIT"; 
@@ -11,7 +11,10 @@ export const register = async (req, res) => {
             name,
             identification,
             email,
-            roomCode
+            tipoUsuario,
+            roomCode,
+            rol,
+            finalizadaTarea
         });
         
         const userSaved = await newUser.save();
@@ -33,5 +36,25 @@ export const roomCode = async (req, res) => {
     } catch (error) {
         console.error("Error fetching room code:", error);
         res.status(500).send("Internal server error.");
+    }
+};
+
+export const selectRole = async (req, res) => {
+    const { userId, selectedRole } = req.body; // userId identifies which user to update, selectedRole is their chosen role
+
+    try {
+        const userToUpdate = await user.findById(userId);
+
+        if (!userToUpdate) {
+            return res.status(404).send('User not found.');
+        }
+
+        userToUpdate.rol = selectedRole;
+        const updatedUser = await userToUpdate.save();
+        
+        res.json(updatedUser);
+    } catch (error) {
+        console.error("Error updating user role:", error);
+        res.status(500).send('Internal server error.');
     }
 };
