@@ -20,7 +20,7 @@ const generateRoomCode = () => {
     return code;
 };
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("*/2 * * * *", async () => {
     const newCode = generateRoomCode();
     console.log(`Generated new room code: ${newCode}`);
     try {

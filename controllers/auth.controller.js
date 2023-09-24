@@ -58,3 +58,14 @@ export const selectRole = async (req, res) => {
         res.status(500).send('Internal server error.');
     }
 };
+
+export const getUsersInRoom = async (req, res) => {
+    try {
+      const { roomCode } = req.params;
+      const count = await user.countDocuments({ roomCode });
+      res.json({ userCount: count });
+    } catch (error) {
+      console.error('Error fetching users count:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  };
